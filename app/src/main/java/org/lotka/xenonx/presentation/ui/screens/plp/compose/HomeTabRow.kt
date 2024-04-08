@@ -356,7 +356,8 @@ fun Pv(
                                 },
                                 onLadderUpClick = {},
                                 onFeaturedClick = {},
-                                index = index
+                                index = index,
+                                onCardClick = false
                             )
 
 
@@ -560,7 +561,8 @@ fun All(
                                 },
                                 onLadderUpClick = {},
                                 onFeaturedClick = {},
-                                index = index
+                                index = index,
+                                onCardClick = false
                             )
 
 

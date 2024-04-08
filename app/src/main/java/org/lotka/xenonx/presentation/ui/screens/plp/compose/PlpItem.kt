@@ -66,258 +66,79 @@ fun PlpItem(
     onLadderUpClick: (id: Int) -> Unit,
     onFeaturedClick: (id: Int) -> Unit,
     index: Int,
+    onCardClick: Boolean
 
     ) {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-        val isFeatured = item.isPremiumUser
-        Card(
-            modifier = Modifier
-                .padding(4.dp)
-                .background(if (isDarkTheme) kilidDarkBackgound else kilidWhiteBackgound)
-                .clickable { onClicked(item.id) },
-//        shape = RoundedCornerShape(8.dp) ,
-//        border = BorderStroke( 1.dp  , if (isDarkTheme) kilidDarkBorders else kilidWhiteBorders ),
-            elevation = 0.dp
+    Card(
+        modifier = Modifier
+            .clip(
+                RoundedCornerShape(
+                    topStart = 12.dp,
+                    topEnd = 12.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp,
+                )
+            )
+            .padding(vertical = 4.dp, horizontal = 12.dp)
+            .fillMaxWidth()
+            .height(90.dp)
+            .clickable {
+//        item?.id?.let { onClicked(it, item.) }
+            },
+        elevation = 2.dp,
+        contentColor = if (onCardClick) Color.Green else Color.White,
+        backgroundColor = if (isDarkTheme) Color.White else Color.Gray,
+
+
         ) {
-
-
-            val thumbnailUrl: String = item.smallProfileImage ?: "string"
-            val thumbnailDrawable: Int? =
-                if (thumbnailUrl == "string") R.drawable.nd_noimage else null
+        Column {
 
             Row(
-                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .background(if (isDarkTheme) kilidDarkBackgound else kilidWhiteBackgound)
-                    .padding(horizontal = 12.dp)
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
+                Text(text = "narmak", modifier = Modifier.padding(start = 8.dp, top = 8.dp))
 
-                FastImage(
+                Icon(painter = painterResource(id = R.drawable.menu),
+                    contentDescription =null,
                     modifier = Modifier
-                        .size(56.dp),
-                    imageUrl = thumbnailUrl ?: thumbnailDrawable,
-                    contentDescription = "Plp Item Image",
-                    isRoundImage = true
-
+                        .padding(start = 8.dp, top = 8.dp)
+                        .size(24.dp)
+                        .padding(end = 12.dp, top = 8.dp)
                 )
 
-
-                // Advertisement Info
-                Column(
-                    modifier = Modifier
-                        .weight(2f)
-                        .height(60.dp),
-                    verticalArrangement = Arrangement.SpaceBetween,
-
-                    ) {
-
-
-                    Column(
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.Start,
-                        modifier = Modifier
-                            .padding(start = 11.dp)
-                            .fillMaxWidth()
-                            .height(80.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically // Align items vertically in the row
-                        ) {
-
-                            if (item.isLockAccount) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.lock_account),
-                                    contentDescription = "mute",
-                                    modifier = Modifier.size(13.dp), tint = LockIconColor
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = item.userFirstName?.chunked(10) { it.trim() }
-                                        ?.joinToString("\n") ?: "",
-                                    style = KilidTypography.h4,
-                                    color = if (isDarkTheme) kilidDarkTexts else kilidWhiteTexts,
-                                )
-
-                            } else {
-                                Text(
-                                    text = item.userFirstName?.chunked(10) { it.trim() }
-                                        ?.joinToString("\n") ?: "",
-                                    style = KilidTypography.h4,
-                                    color = if (isDarkTheme) kilidDarkTexts else kilidWhiteTexts,
-                                )
-                            }
-
-
-
-                            Spacer(modifier = Modifier.width(4.dp))
-//
-                            val painter = when (item.verificationStatus) {
-                                UserVerificationStatus.NONE -> {
-                                    null
-                                }
-
-                                UserVerificationStatus.BLUE_VERIFIED -> {
-                                    R.drawable.pink_verify
-                                }
-
-                                UserVerificationStatus.GREEN_VERIFIED -> {
-                                    R.drawable.vector
-                                }
-
-                                UserVerificationStatus.ADMIN_VERIFIED -> {
-                                    R.drawable.pink_verify
-                                }
-                            }
-                            FastImage(
-                                imageUrl = painter,
-                                modifier = Modifier.size(13.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            if (item.isSilent) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.mute_icon),
-                                    contentDescription = "mute",
-                                    modifier = Modifier.size(16.dp)
-                                )
-
-                            }
-                        }
-
-                        if (item.isTyping) {
-                            Text(
-                                text = "typing...",
-                                style = KilidTypography.h3,
-                                color = if (isDarkTheme) TelegrampinkColor else TelegrampinkColor,
-                            )
-                        }
-                        //price per meter or rent
-                        else {
-                            Row() {
-
-                                if (item.isSentAPicture) {
-                                    FastImage(
-                                        imageUrl = R.drawable.ic_ladder_up_yellow,
-                                        modifier = Modifier.size(14.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(4.dp))
-
-                                    Text(
-                                        text = item.lastMessageText?.chunked(30) { it.trim() }
-                                            ?.joinToString("...") ?: "",
-                                        style = KilidTypography.h3,
-                                        color = if (isDarkTheme) Color.White else DescriptionTextColor,
-                                    )
-                                } else {
-                                    Text(
-                                        text = item.lastMessageText?.chunked(30) { it.trim() }
-                                            ?.joinToString("...") ?: "",
-                                        style = KilidTypography.h3,
-                                        color = if (isDarkTheme) Color.White else DescriptionTextColor,
-                                    )
-                                }
-                            }
-
-                        }
-
-
-                    }
-
-
-                }
-
-                Column(
-
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-
-                ) {
-                    Row(
-
-                    ) {
-                        if (item.isUnreadMessage) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.markread),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .size(12.dp), tint = LockIconColor
-
-                            )
-                        } else {
-//                            mark read icon add
-                        }
-
-
-
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = item.lastMessageDate.toString(),
-                            color = DescriptionTextColor,
-                            style = KilidTypography.h3
-                        )
-
-                    }
-
-
-                    when (item.isItemPinned) {
-                        IsItemPinnedStatus.NONE -> {
-                            null
-                        }
-
-                        IsItemPinnedStatus.ITEMPINNED -> {
-                            Icon(
-                                painter = painterResource(id = R.drawable.pinicon),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(23.dp)
-                                    .clip(shape = CircleShape)
-                            )
-                        }
-
-                        IsItemPinnedStatus.MESSAGENUMBER -> {
-                            Box(
-                                modifier = Modifier
-                                    .clip(shape = RoundedCornerShape(12.dp))
-                                    .background(color = TelegrampinkColor)
-                                    .size(height = 23.dp, width = 31.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = item.numUnreadMessage.toString(),
-                                    color = Color.White,
-                                    style = KilidTypography.h2,
-                                    textAlign = TextAlign.Center,
-
-                                    )
-                            }
-
-
-                        }
-                    }
-
-
-                }
+//                Text(text = "neslonmandella - jadi - folan", modifier = Modifier.padding(8.dp))
 
 
             }
 
 
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Text(text = "narmak - danpzishki - jahfari", modifier = Modifier.padding(start = 8.dp, top = 8.dp))
+
+                Text(text = "narmak", modifier = Modifier.padding(start = 8.dp, top = 8.dp))
+
+//                Text(text = "neslonmandella - jadi - folan", modifier = Modifier.padding(8.dp))
+
+
+            }
         }
 
 
-    }
-    Spacer(modifier = Modifier.height(11.dp))
-//        Divider(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 80.dp)
-//        )
 
+
+
+    }
 
 }
-
-
 
 
 

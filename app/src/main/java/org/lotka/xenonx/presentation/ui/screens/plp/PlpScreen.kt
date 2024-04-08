@@ -91,6 +91,7 @@ import org.lotka.xenonx.presentation.util.UIState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import org.lotka.xenonx.presentation.theme.TelegramBackGround
+import org.lotka.xenonx.presentation.ui.screens.frament.FloatingActionButton
 import org.lotka.xenonx.presentation.ui.screens.plp.compose.HomeTabRow
 import timber.log.Timber
 import java.util.Collections
@@ -289,6 +290,9 @@ fun PlpScreen(
                 Scaffold(
                     modifier = Modifier.fillMaxSize().
                     background(color = TelegramBackGround),
+                    floatingActionButton = {
+                        FloatingActionButton()
+                    },
                     topBar = {
                     HomeTopBar(
                         onClick = {},
@@ -567,7 +571,9 @@ fun PlpScreen(
                                                             },
                                                             onLadderUpClick = {},
                                                             onFeaturedClick = {},
-                                                            index = index
+                                                            index = index,
+                                                            onCardClick = false,
+
                                                         )
 
 

@@ -82,17 +82,27 @@ fun HomeApp(
                 composable(
                     route = HomeScreensNavigation.SingleChatScreen.route,
                 ) {
-                    SingleChatScreen(
-                      onBackPressed = { navController.popBackStack() },
-                        isDarkMode = isDarkTheme,
-                        onToggleTheme = onToggleTheme,
-                        viewModel = plpviewModel,
+                    PlpScreen(
                         navController = navController,
+                        viewModel = plpviewModel,
+                        onNavigateToRecipeDetailScreen =onNavigateToRecipeDetailScreen ,
+                        isDarkTheme =isDarkTheme
+                    ) {
+
+                    }
 
 
-
-
-                    )
+//                    SingleChatScreen(
+//                      onBackPressed = { navController.popBackStack() },
+//                        isDarkMode = isDarkTheme,
+//                        onToggleTheme = onToggleTheme,
+//                        viewModel = plpviewModel,
+//                        navController = navController,
+//
+//
+//
+//
+//                    )
                 }
 
 

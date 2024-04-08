@@ -37,81 +37,26 @@ fun HomeTopBar(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Spacer(modifier = Modifier.width(2.dp))
+                Text(text = "MyLoction")
+            }
+            
+        },
+   
+        actions = {
+            IconButton(onClick = { onToggleTheme() }) {
                 Icon(
-                    imageVector = Icons.Default.Search,
+                    imageVector = if (isDarkMode) Icons.Default.Search else Icons.Default.Search,   
                     contentDescription = "Search",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .clickable {
-//                            onToggleTheme()
-                        }
+                    tint = Color.Black
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                if (mainScreens) {
-                    Text(
-                        text = "1 Story",
-                        fontSize = 20.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(end = 12.dp)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .clip(CircleShape)
-                            .background(Color.White)
-                            .align(Alignment.CenterVertically)
-                            .border(1.dp, Color.Gray, CircleShape)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.telegram),
-                            contentDescription = "Telegram Logo",
-                            modifier = Modifier
-                                .size(32.dp)
-                                .padding(2.dp)
-                                .clip(CircleShape)
-                                .align(Alignment.Center),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(24.dp))
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = "Menu",
-                        tint = Color.Black,
-                        modifier = Modifier.padding(end = 12.dp)
-                    )
-                } else {
-                    Box(
-                        Modifier
-                            .width(80.dp)
-                            .fillMaxHeight()
-                            .align(Alignment.CenterVertically)
-                            .clickable { onBackPressed() },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Spacer(modifier = Modifier.width(30.dp))
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_left),
-                            contentDescription = "Back",
-                            tint = Color.White,
-                            modifier = Modifier.size(18.dp)
-                        )
-                    }
-                }
             }
         },
-        backgroundColor = Color.White,
-        elevation = 0.dp,
-        contentColor = Color.White,
-        modifier = Modifier.border(BorderStroke(0.dp, Color.White))
-
-
-
+        backgroundColor = Color.Transparent,
+        elevation = 0.dp
     )
+             
 }
 
 
